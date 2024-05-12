@@ -3,12 +3,14 @@ package ee.kivikakk.sevsegsim
 import _root_.circt.stage.ChiselStage
 import chisel3._
 import chisel3.util._
+import ee.hrzn.chryse.ChryseApp
 import ee.hrzn.chryse.HasIO
-import ee.hrzn.chryse.platform.ElaboratablePlatform
+import ee.hrzn.chryse.platform.BoardPlatform
 import ee.hrzn.chryse.platform.Platform
 import ee.hrzn.chryse.platform.ice40.ICE40Platform
 
 import java.io.PrintWriter
+import ee.hrzn.chryse.platform.cxxrtl.CXXRTLOptions
 
 class TopIO extends Bundle {
   val ubtn     = Input(Bool())
@@ -95,22 +97,14 @@ class Top(implicit platform: Platform) extends Module with HasIO[TopIO] {
   }
 }
 
-object Top extends App {
-  def apply()(implicit platform: ElaboratablePlatform) =
-    platform(new Top)
-
-  implicit private val platform: ElaboratablePlatform = ICE40Platform()
-  private val firtoolOpts = Array(
-    "--lowering-options=disallowLocalVariables",
-    "--lowering-options=disallowPackedArrays",
-    "-disable-all-randomization",
-    "-strip-debug-info",
+object Top extends ChryseApp {
+  override val name: String = "sevsegsim"
+  override val targetPlatforms: Seq[BoardPlatform] = Seq(
+    ICE40Platform(),
   )
-  val verilog =
-    ChiselStage.emitSystemVerilog(Top(), firtoolOpts = firtoolOpts)
-  new PrintWriter(s"Top-${platform.id}.sv", "utf-8") {
-    try
-      write(verilog)
-    finally close()
-  }
+  override val cxxrtlOptions: Option[CXXRTLOptions] = Some(
+    CXXRTLOptions(clockHz = 3_000_000),
+  )
+
+  override def genTop(implicit platform: Platform) = new Top()
 }
