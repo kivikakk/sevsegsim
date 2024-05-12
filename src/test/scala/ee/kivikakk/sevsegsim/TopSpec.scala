@@ -1,4 +1,4 @@
-package com.example.newproject
+package ee.kivikakk.sevsegsim
 
 import chisel3._
 import chiseltest._

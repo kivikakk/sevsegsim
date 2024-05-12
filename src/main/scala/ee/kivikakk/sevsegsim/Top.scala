@@ -1,4 +1,4 @@
-package com.example.newproject
+package ee.kivikakk.sevsegsim
 
 import _root_.circt.stage.ChiselStage
 import chisel3._
