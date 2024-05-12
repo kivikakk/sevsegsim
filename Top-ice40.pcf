@@ -3,5 +3,16 @@ set_frequency clki 12.0
 
 set_io io_ubtn 10
 
-set_io io_ledr 11
-set_io io_ledg 37
+set_io io_pmod1a1 4
+set_io io_pmod1a2 2
+set_io io_pmod1a3 47
+set_io io_pmod1a4 45
+set_io io_pmod1a7 3
+set_io io_pmod1a8 48
+set_io io_pmod1a9 46
+set_io io_pmod1a10 44
+
+set_io io_pmod2_1 27
+set_io io_pmod2_2 25
+set_io io_pmod2_3 21
+set_io io_pmod2_4 19
