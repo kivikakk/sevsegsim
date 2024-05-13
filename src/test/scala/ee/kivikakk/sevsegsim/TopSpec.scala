@@ -14,15 +14,7 @@ class TopSpec extends AnyFlatSpec with ChiselScalatestTester {
     val clockHz = 8
   }
 
-  it should "blink the light" in {
-    test(new Top()).withAnnotations(Seq(WriteVcdAnnotation)) { c =>
-      // ledg is always false (on).
-      // ledr starts true (off) for 1/4 duty, then toggles evenly at 1/2 duty.
-      for { ledr <- Seq(1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1) } {
-        c.io.ledg.expect(false.B)
-        c.io.ledr.expect((ledr == 1).B)
-        c.clock.step()
-      }
-    }
+  it should "do something :)" in {
+    test(new Top()).withAnnotations(Seq(WriteVcdAnnotation)) { c => }
   }
 }

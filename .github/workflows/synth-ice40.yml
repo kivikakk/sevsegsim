@@ -22,8 +22,5 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: Elaborate
-      run: sbt run
-
     - name: Elaborate and synthesise
-      run: sbt run build ice40
+      run: sbt 'run build ice40'
