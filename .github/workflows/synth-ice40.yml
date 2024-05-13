@@ -25,5 +25,5 @@ jobs:
     - name: Elaborate
       run: sbt run
 
-    - name: Synthesise
-      run: make ice40
+    - name: Elaborate and synthesise
+      run: sbt run build ice40

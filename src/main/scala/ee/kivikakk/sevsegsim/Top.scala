@@ -7,10 +7,8 @@ import ee.hrzn.chryse.ChryseApp
 import ee.hrzn.chryse.HasIO
 import ee.hrzn.chryse.platform.BoardPlatform
 import ee.hrzn.chryse.platform.Platform
-import ee.hrzn.chryse.platform.ice40.ICE40Platform
-
-import java.io.PrintWriter
 import ee.hrzn.chryse.platform.cxxrtl.CXXRTLOptions
+import ee.hrzn.chryse.platform.ice40.ICE40Platform
 
 class TopIO extends Bundle {
   val ubtn     = Input(Bool())
@@ -98,13 +96,9 @@ class Top(implicit platform: Platform) extends Module with HasIO[TopIO] {
 }
 
 object Top extends ChryseApp {
-  override val name: String = "sevsegsim"
-  override val targetPlatforms: Seq[BoardPlatform] = Seq(
-    ICE40Platform(),
-  )
-  override val cxxrtlOptions: Option[CXXRTLOptions] = Some(
-    CXXRTLOptions(clockHz = 3_000_000),
-  )
+  override val name: String    = "sevsegsim"
+  override val targetPlatforms = Seq(ICE40Platform())
+  override val cxxrtlOptions   = Some(CXXRTLOptions(clockHz = 3_000_000))
 
   override def genTop(implicit platform: Platform) = new Top()
 }
