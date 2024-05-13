@@ -11,7 +11,7 @@ class TopSpec extends AnyFlatSpec with ChiselScalatestTester {
 
   implicit private val platform: Platform = new Platform {
     val id      = "topspec"
-    val clockHz = 8
+    val clockHz = 10_000
   }
 
   it should "do something :)" in {
