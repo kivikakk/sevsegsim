@@ -96,7 +96,7 @@ class Top(implicit platform: Platform) extends Module with HasIO[TopIO] {
 }
 
 object Top extends ChryseApp {
-  override val name: String    = "sevsegsim"
+  override val name            = "sevsegsim"
   override val targetPlatforms = Seq(ICE40Platform())
   override val cxxrtlOptions   = Some(CXXRTLOptions(clockHz = 3_000_000))
 
