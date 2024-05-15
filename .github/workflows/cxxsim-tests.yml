@@ -1,4 +1,4 @@
-name: iCE40 synthesis
+name: cxxsim tests
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  synth-ice40:
+  cxxsim-tests:
     runs-on: ubuntu-latest
     steps:
     - name: Set up Chryse
@@ -22,5 +22,5 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: Elaborate and synthesise
-      run: sbt 'run build ice40'
+    - name: Elaborate and run cxxsim
+      run: sbt 'run cxxsim'
