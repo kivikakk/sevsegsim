@@ -1,9 +1,10 @@
 build/
-.clangd
+*.vcd
 
 target/
 test_run_dir/
 
+.cache/
 .metals/
 .bloop/
 .bsp/
