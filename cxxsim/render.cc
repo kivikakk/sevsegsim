@@ -16,7 +16,7 @@ static SDL_FPoint vps[6][4] = {
     {{0, 95}, {0, 5}, {20, 25}, {20, 75}},
 };
 
-void drawSegments(SDL_Renderer *renderer, bool segments[7], float offX,
+void drawSegments(SDL_Renderer *renderer, const bool segments[7], float offX,
                   float offY) {
   for (int i = 0; i < 6; ++i) {
     SDL_Vertex vx[] = {{vps[i][0], segments[i] ? red : grey, {}},

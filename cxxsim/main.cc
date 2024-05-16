@@ -33,6 +33,7 @@ int main(int argc, char **argv) {
                                  SDL_WINDOWPOS_CENTERED, 600, 300, 0);
   auto renderer = SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED);
 
+  top.p_io__ubtn.set(true);
   top.p_reset.set(true);
   top.p_clock.set(true);
   top.step();
@@ -42,15 +43,31 @@ int main(int argc, char **argv) {
   vcd.sample(vcd_time++);
   top.p_reset.set(false);
 
+  auto &inst = Testbench::inst();
+
+  // const bool off[7] = {false, false, false, false, false, false, false};
+  bool segments[7];
   auto finished = false;
   std::string window_title;
   while (!finished) {
+    top.p_io__ubtn.set(true);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderClear(renderer);
+    // SDL_RenderClear(renderer);
 
-    bool segments[] = {true, false, true, false, true, false, true};
     for (int i = 0; i < 4; ++i) {
-      drawSegments(renderer, segments, 50.f + i * 130.f, 50.f);
+      if ((i == 0 && !inst.p_ds__0) || (i == 1 && !inst.p_ds__1) ||
+          (i == 2 && !inst.p_ds__2) || (i == 3 && !inst.p_ds__3)) {
+        // drawSegments(renderer, off, 50.f + i * 130.f, 50.f);
+      } else {
+        segments[0] = !inst.p_abcdefgp__0;
+        segments[1] = !inst.p_abcdefgp__1;
+        segments[2] = !inst.p_abcdefgp__2;
+        segments[3] = !inst.p_abcdefgp__3;
+        segments[4] = !inst.p_abcdefgp__4;
+        segments[5] = !inst.p_abcdefgp__5;
+        segments[6] = !inst.p_abcdefgp__6;
+        drawSegments(renderer, segments, 50.f + i * 130.f, 50.f);
+      }
     }
 
     SDL_RenderPresent(renderer);
@@ -63,8 +80,14 @@ int main(int argc, char **argv) {
         finished = true;
         break;
       case SDL_KEYDOWN:
-        if (event.key.keysym.sym == SDLK_ESCAPE)
+        switch (event.key.keysym.sym) {
+        case SDLK_ESCAPE:
           finished = true;
+          break;
+        case SDLK_SPACE:
+          top.p_io__ubtn.set(false);
+          break;
+        }
         break;
       }
     }

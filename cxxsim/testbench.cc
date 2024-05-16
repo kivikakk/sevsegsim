@@ -9,6 +9,8 @@ Testbench::~Testbench() { _inst = nullptr; }
 
 Testbench &Testbench::inst() { return *_inst; }
 
+bool Testbench::eval(performer *performer) { return true; }
+
 Testbench *Testbench::_inst = nullptr;
 
 std::unique_ptr<cxxrtl_design::bb_p_CXXRTLTestbench>

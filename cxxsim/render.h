@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 
-void drawSegments(SDL_Renderer *renderer, bool segments[7], float offX,
+void drawSegments(SDL_Renderer *renderer, const bool segments[7], float offX,
                   float offY);
 
 #endif
