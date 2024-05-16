@@ -137,7 +137,7 @@ class Top(implicit platform: Platform) extends Module with HasIO[TopIO] {
 
   ds(charIxReg) := true.B
 
-  val perSegTime = platform.clockHz / 1_000_000
+  val perSegTime = Seq(platform.clockHz / 1_000_000, 2).max
   val timerReg   = RegInit(0.U(unsignedBitLength(perSegTime - 1).W))
   timerReg := Mux(timerReg === (perSegTime - 1).U, 0.U, timerReg + 1.U)
   when(timerReg === (perSegTime - 1).U) {
