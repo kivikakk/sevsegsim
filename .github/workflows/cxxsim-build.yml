@@ -1,4 +1,4 @@
-name: cxxsim tests
+name: cxxsim build
 
 on:
   push:
@@ -10,9 +10,12 @@ permissions:
   contents: read
 
 jobs:
-  cxxsim-tests:
+  cxxsim-build:
     runs-on: ubuntu-latest
     steps:
+    - name: Install SDL
+      run: sudo apt install libsdl2-dev libsdl2-2.0-0 -y
+
     - name: Set up Chryse
       uses: chryse-hdl/setup-chryse-action@v1
       with:
@@ -22,5 +25,5 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: Elaborate and run cxxsim
-      run: sbt 'run cxxsim'
+    - name: Elaborate and compile cxxsim
+      run: sbt 'run cxxsim -c'
