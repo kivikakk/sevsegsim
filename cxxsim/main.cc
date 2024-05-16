@@ -45,19 +45,25 @@ int main(int argc, char **argv) {
 
   auto &inst = Testbench::inst();
 
-  // const bool off[7] = {false, false, false, false, false, false, false};
+  // It's pretty sketch, but for now we "ghost" the display and therefore mimic
+  // human vision by simply not rendering unpowered digits, and not clearing the
+  // display between renders. This may not be portable. It actually produces
+  // some pretty fun artefacting for me when 'rotating' the display with
+  // spacebar/UBTN!
+
+  SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+  SDL_RenderClear(renderer);
+
   bool segments[7];
   auto finished = false;
   std::string window_title;
   while (!finished) {
     top.p_io__ubtn.set(true);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-    // SDL_RenderClear(renderer);
 
     for (int i = 0; i < 4; ++i) {
       if ((i == 0 && !inst.p_ds__0) || (i == 1 && !inst.p_ds__1) ||
           (i == 2 && !inst.p_ds__2) || (i == 3 && !inst.p_ds__3)) {
-        // drawSegments(renderer, off, 50.f + i * 130.f, 50.f);
+        // off.
       } else {
         segments[0] = !inst.p_abcdefgp__0;
         segments[1] = !inst.p_abcdefgp__1;

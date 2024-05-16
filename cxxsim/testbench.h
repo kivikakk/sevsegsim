@@ -10,8 +10,6 @@ public:
 
   static Testbench &inst();
 
-  bool eval(performer *performer) override;
-
 private:
   static Testbench *_inst;
 };

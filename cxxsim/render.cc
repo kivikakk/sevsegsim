@@ -1,7 +1,7 @@
 
 #include "render.h"
 
-static SDL_Colour grey = {128, 128, 128, SDL_ALPHA_OPAQUE},
+static SDL_Colour grey = {64, 64, 64, SDL_ALPHA_OPAQUE},
                   red = {255, 64, 64, SDL_ALPHA_OPAQUE};
 
 static int t1[] = {0, 1, 2}, t2[] = {0, 2, 3}, t3[] = {0, 3, 4},
