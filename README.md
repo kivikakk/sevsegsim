@@ -3,7 +3,9 @@
 A little proving ground for and demonstration of
 [Chryse](https://github.com/chryse-hdl/chryse), particularly its `cxxsim` mode.
 
-Here's the gateware ([top](src/main/scala/ee/kivikakk/sevsegsim/Top.scala), [7-seg renderer](src/main/scala/ee/kivikakk/sevsegsim/SevSeg.scala)) running on an iCEBreaker:
+Here's the gateware ([top](src/main/scala/ee/kivikakk/sevsegsim/Top.scala),
+[7-seg renderer](src/main/scala/ee/kivikakk/sevsegsim/SevSeg.scala)) running on
+an iCEBreaker:
 
 ![photograph of sevsegsim deployed to an iCEBreaker](demo-ice40.jpg)
 
