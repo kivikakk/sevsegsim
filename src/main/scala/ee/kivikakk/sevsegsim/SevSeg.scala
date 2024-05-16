@@ -5,7 +5,7 @@ import chisel3.util._
 
 class SevSeg extends Module {
   val io = IO(new Bundle {
-    val char = Input(SevSegChar())
+    val char    = Input(SevSegChar())
     val abcdefg = Output(Vec(7, Bool()))
   })
 
@@ -21,16 +21,20 @@ class SevSeg extends Module {
 
   switch(io.char) {
     is(SevSegChar.P) {
-      io.abcdefg := Seq(false.B, false.B, true.B, true.B, false.B, false.B, false.B)
+      io.abcdefg := Seq(false.B, false.B, true.B, true.B, false.B, false.B,
+        false.B)
     }
     is(SevSegChar.O) {
-      io.abcdefg := Seq(false.B, false.B, false.B, false.B, false.B, false.B, true.B)
+      io.abcdefg := Seq(true.B, true.B, false.B, false.B, false.B, true.B,
+        false.B)
     }
     is(SevSegChar.N) {
-      io.abcdefg := Seq(true.B, true.B, false.B, true.B, false.B, true.B, false.B)
+      io.abcdefg := Seq(true.B, true.B, false.B, true.B, false.B, true.B,
+        false.B)
     }
     is(SevSegChar.G) {
-      io.abcdefg := Seq(false.B, false.B, false.B, false.B, true.B, false.B, false.B)
+      io.abcdefg := Seq(false.B, false.B, false.B, false.B, true.B, false.B,
+        false.B)
     }
     is(SevSegChar.Off) {
       io.abcdefg := Seq(true.B, true.B, true.B, true.B, true.B, true.B, true.B)
