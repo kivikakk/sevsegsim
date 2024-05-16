@@ -14,11 +14,11 @@ impl](cxxsim/testbench.cc)) running in simulation:
 
 ![photograph of sevsegsim running in cxxsim](demo-cxxsim.png)
 
-`sbt run "build ice40 -p"` builds for iCE40 and programs the board.
+`sbt "run build ice40 -p"` builds for iCE40 and programs the board.
 
-`sbt run cxxsim` builds and runs the C++ simulation.
+`sbt "run cxxsim"` builds and runs the C++ simulation.
 
-`sbt run "cxxsim -v out.vcd"` also generates a VCD:
+`sbt "run cxxsim -v out.vcd"` also generates a VCD:
 
 ![screenshot of GTKWave showing the waveforms for the sim](demo-cxxsim-vcd.png)
 
