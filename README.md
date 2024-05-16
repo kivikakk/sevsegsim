@@ -7,6 +7,8 @@ Here's the gateware ([top](src/main/scala/ee/kivikakk/sevsegsim/Top.scala), [7-s
 
 ![photograph of sevsegsim deployed to an iCEBreaker](demo-ice40.jpg)
 
+(The gateware's not well-written, vabandust!)
+
 And here's the same gateware (plus [blackbox
 definition](src/main/scala/ee/kivikakk/sevsegsim/CXXRTLTestbench.scala), [main
 loop](cxxsim/main.cc), [renderer](cxxsim/render.cc), [do-nothing blackbox
