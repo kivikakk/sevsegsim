@@ -1,4 +1,4 @@
-#include "testbench.h"
+#include "Testbench.h"
 
 Testbench::Testbench() {
   assert(_inst == nullptr);
@@ -8,6 +8,8 @@ Testbench::Testbench() {
 Testbench::~Testbench() { _inst = nullptr; }
 
 Testbench &Testbench::inst() { return *_inst; }
+
+void Testbench::reset() { p_ubtn.set(true); }
 
 Testbench *Testbench::_inst = nullptr;
 

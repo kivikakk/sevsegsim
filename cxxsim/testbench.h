@@ -10,6 +10,8 @@ public:
 
   static Testbench &inst();
 
+  void reset() override;
+
 private:
   static Testbench *_inst;
 };

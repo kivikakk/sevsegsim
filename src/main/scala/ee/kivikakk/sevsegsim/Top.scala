@@ -29,6 +29,7 @@ class TopIO extends Bundle {
 
 // This feels very un-Chisel.
 case class Pinout(
+    ubtn: Bool,
     d1: Data,
     a: Data,
     f: Data,
@@ -66,6 +67,7 @@ class Top(implicit platform: Platform) extends Module with HasIO[TopIO] {
       io.pmod2_4  := DontCare
 
       Pinout(
+        ubtn = bb.io.ubtn,
         d1 = bb.io.ds(0),
         d2 = bb.io.ds(1),
         d3 = bb.io.ds(2),
@@ -81,6 +83,7 @@ class Top(implicit platform: Platform) extends Module with HasIO[TopIO] {
       )
     case _ =>
       Pinout(
+        ubtn = io.ubtn,
         d1 = io.pmod2_4,
         a = io.pmod2_3,
         f = io.pmod2_2,
@@ -97,7 +100,7 @@ class Top(implicit platform: Platform) extends Module with HasIO[TopIO] {
   }
 
   val flipReg     = RegInit(false.B)
-  val ubtnRelease = io.ubtn & RegNext(~io.ubtn)
+  val ubtnRelease = pinout.ubtn & RegNext(~pinout.ubtn)
   when(ubtnRelease)(flipReg := !flipReg)
 
   val ds      = VecInit(Seq.fill(4)(false.B))
