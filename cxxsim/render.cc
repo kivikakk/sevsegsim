@@ -1,9 +1,6 @@
 
 #include "render.h"
 
-static SDL_Colour grey = {64, 64, 64, SDL_ALPHA_OPAQUE},
-                  red = {255, 64, 64, SDL_ALPHA_OPAQUE};
-
 static int t1[] = {0, 1, 2}, t2[] = {0, 2, 3}, t3[] = {0, 3, 4},
            t4[] = {0, 4, 5};
 
@@ -16,13 +13,19 @@ static SDL_FPoint vps[6][4] = {
     {{0, 95}, {0, 5}, {20, 25}, {20, 75}},
 };
 
-void drawSegments(SDL_Renderer *renderer, const bool segments[7], float offX,
-                  float offY) {
+static SDL_Color makeColor(segment_t segment) {
+  return {uint8_t(64 + ((float)segment / 255.f * (255.f - 64.f))), 64, 64,
+          SDL_ALPHA_OPAQUE};
+}
+
+void drawSegments(SDL_Renderer *renderer, const segment_t segments[7],
+                  float offX, float offY) {
   for (int i = 0; i < 6; ++i) {
-    SDL_Vertex vx[] = {{vps[i][0], segments[i] ? red : grey, {}},
-                       {vps[i][1], segments[i] ? red : grey, {}},
-                       {vps[i][2], segments[i] ? red : grey, {}},
-                       {vps[i][3], segments[i] ? red : grey, {}}};
+    SDL_Color color = makeColor(segments[i]);
+    SDL_Vertex vx[] = {{vps[i][0], color, {}},
+                       {vps[i][1], color, {}},
+                       {vps[i][2], color, {}},
+                       {vps[i][3], color, {}}};
     for (int j = 0; j < 4; ++j)
       vx[j].position.x += offX, vx[j].position.y += offY;
 
@@ -30,13 +33,10 @@ void drawSegments(SDL_Renderer *renderer, const bool segments[7], float offX,
     SDL_RenderGeometry(renderer, nullptr, vx, 4, t2, 3);
   }
 
+  SDL_Color color = makeColor(segments[6]);
   SDL_Vertex vx[6] = {
-      {{15, 90}, segments[6] ? red : grey, {}},
-      {{85, 90}, segments[6] ? red : grey, {}},
-      {{95, 100}, segments[6] ? red : grey, {}},
-      {{85, 110}, segments[6] ? red : grey, {}},
-      {{15, 110}, segments[6] ? red : grey, {}},
-      {{5, 100}, segments[6] ? red : grey, {}},
+      {{15, 90}, color, {}},  {{85, 90}, color, {}},  {{95, 100}, color, {}},
+      {{85, 110}, color, {}}, {{15, 110}, color, {}}, {{5, 100}, color, {}},
   };
   for (int j = 0; j < 6; ++j)
     vx[j].position.x += offX, vx[j].position.y += offY;

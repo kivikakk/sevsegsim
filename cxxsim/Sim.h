@@ -14,6 +14,7 @@ public:
   void wait();
 
   virtual uint64_t cycle_number() = 0;
+  virtual uint64_t elapsed_cycles() = 0;
 
 protected:
   SimController();
@@ -29,6 +30,7 @@ public:
   void main();
 
   uint64_t cycle_number() override;
+  uint64_t elapsed_cycles() override;
 
 private:
   Sim(const std::optional<std::string> &vcd_out);
@@ -43,6 +45,7 @@ private:
   cxxrtl::vcd_writer _vcd;
 
   SDL_atomic_t _cycle_number;
+  uint64_t _last_elapsed;
 };
 
 #endif

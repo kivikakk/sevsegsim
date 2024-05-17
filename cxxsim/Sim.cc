@@ -35,8 +35,15 @@ void Sim::main() {
 
 uint64_t Sim::cycle_number() { return SDL_AtomicGet(&_cycle_number); }
 
+uint64_t Sim::elapsed_cycles() {
+  auto cn = cycle_number();
+  auto elapsed = cn - _last_elapsed;
+  _last_elapsed = cn;
+  return elapsed;
+}
+
 Sim::Sim(const std::optional<std::string> &vcd_out)
-    : _top(), _vcd_out(vcd_out), _vcd_time(0), _vcd() {
+    : _top(), _vcd_out(vcd_out), _vcd_time(0), _vcd(), _last_elapsed(0) {
   SDL_AtomicSet(&_cycle_number, 0);
   if (_vcd_out) {
     debug_items di;

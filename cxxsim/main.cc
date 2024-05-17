@@ -31,36 +31,19 @@ int main(int argc, char **argv) {
 
   auto &inst = Testbench::inst();
 
-  // It's pretty sketch, but for now we "ghost" the display and therefore mimic
-  // human vision by simply not rendering unpowered digits, and not clearing the
-  // display between renders. This may not be portable. It actually produces
-  // some pretty fun artefacting for me when 'rotating' the display with
-  // spacebar/UBTN!
-
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-  SDL_RenderClear(renderer);
-
-  bool segments[7];
   std::string window_title;
+  segment_t segacts[4 * 7];
+  auto last_update = SDL_GetTicks64();
+  auto frame_count = 0;
   while (sc->running()) {
-    auto ticks_start = SDL_GetTicks64();
-
     inst.p_ubtn.set(true);
 
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(renderer);
+
+    inst.segacts(segacts);
     for (int i = 0; i < 4; ++i) {
-      if ((i == 0 && !inst.p_ds__0) || (i == 1 && !inst.p_ds__1) ||
-          (i == 2 && !inst.p_ds__2) || (i == 3 && !inst.p_ds__3)) {
-        // off.
-      } else {
-        segments[0] = !inst.p_abcdefgp__0;
-        segments[1] = !inst.p_abcdefgp__1;
-        segments[2] = !inst.p_abcdefgp__2;
-        segments[3] = !inst.p_abcdefgp__3;
-        segments[4] = !inst.p_abcdefgp__4;
-        segments[5] = !inst.p_abcdefgp__5;
-        segments[6] = !inst.p_abcdefgp__6;
-        drawSegments(renderer, segments, 50.f + i * 130.f, 50.f);
-      }
+      drawSegments(renderer, &segacts[i * 7], 50.f + i * 130.f, 50.f);
     }
 
     SDL_RenderPresent(renderer);
@@ -85,12 +68,28 @@ int main(int argc, char **argv) {
       }
     }
 
-    auto elapsed = SDL_GetTicks64() - ticks_start;
-    std::ostringstream oss;
-    oss << "sevsegsim - cycle " << sc->cycle_number() << " / "
-        << int(1.f / (elapsed / 1000.f)) << " fps";
-    window_title = oss.str();
-    SDL_SetWindowTitle(window, window_title.c_str());
+    ++frame_count;
+
+    auto now = SDL_GetTicks64();
+    if (now - last_update > 1000) {
+      auto elapsed_ticks = now - last_update;
+      auto elapsed_cycles = sc->elapsed_cycles();
+      auto fps = int(float(frame_count) / (elapsed_ticks / 1000.f));
+      std::ostringstream oss;
+      oss << "sevsegsim - ";
+      if (elapsed_cycles < 1000)
+        oss << elapsed_cycles << "Hz";
+      else if (elapsed_cycles < 1000000)
+        oss << (elapsed_cycles / 1000) << "kHz";
+      else
+        oss << (elapsed_cycles / 1000000) << "MHz";
+      oss << " / " << fps << " fps";
+      window_title = oss.str();
+      SDL_SetWindowTitle(window, window_title.c_str());
+
+      last_update = now;
+      frame_count = 0;
+    }
   }
 
   SDL_DestroyRenderer(renderer);
