@@ -29,8 +29,7 @@ SimThread::start(const std::optional<std::string> &vcd_out) {
 
 void SimThread::main() {
   while (lock_if_running()) {
-    for (int i = 0; i < 10; ++i)
-      cycle();
+    cycle();
     unlock();
   }
 
