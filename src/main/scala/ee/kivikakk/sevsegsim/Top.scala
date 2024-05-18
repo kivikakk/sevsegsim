@@ -76,7 +76,7 @@ class Top(implicit platform: Platform) extends Module with HasIO[TopIO] {
       io.pmod1a4 := true.B // period
   }
 
-  val flipReg     = RegInit(false.B)
+  val flipReg     = RegInit(true.B)
   val ubtnRelease = ubtn & RegNext(~ubtn)
   when(ubtnRelease)(flipReg := !flipReg)
 
