@@ -20,11 +20,10 @@ SimThread::SimThread(const std::optional<std::string> &vcd_out)
 
 SimThread::~SimThread() { SDL_DestroyMutex(_mutex); }
 
-std::tuple<SimThread *, SDL_Thread *>
-SimThread::start(const std::optional<std::string> &vcd_out) {
+SimThread *SimThread::start(const std::optional<std::string> &vcd_out) {
   auto sim = new SimThread(vcd_out);
-  auto thread = SDL_CreateThread(simmain, "simmain", sim);
-  return std::make_tuple(sim, thread);
+  sim->_thread = SDL_CreateThread(simmain, "simmain", sim);
+  return sim;
 }
 
 void SimThread::main() {
@@ -47,6 +46,7 @@ bool SimThread::lock_if_running() {
 
 void SimThread::lock() { SDL_LockMutex(_mutex); }
 void SimThread::unlock() { SDL_UnlockMutex(_mutex); }
+void SimThread::wait() { SDL_WaitThread(_thread, nullptr); }
 
 uint64_t SimThread::cycle_number() { return _vcd_time >> 1; }
 

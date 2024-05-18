@@ -15,14 +15,14 @@ private:
 public:
   ~SimThread();
 
-  static std::tuple<SimThread *, SDL_Thread *>
-  start(const std::optional<std::string> &vcd_out);
+  static SimThread *start(const std::optional<std::string> &vcd_out);
 
   void main();
 
   bool lock_if_running();
   void lock();
   void unlock();
+  void wait();
 
   uint64_t cycle_number();
   void halt();
@@ -37,6 +37,7 @@ private:
   uint64_t _vcd_time;
   cxxrtl::vcd_writer _vcd;
 
+  SDL_Thread *_thread;
   SDL_mutex *_mutex;
   bool _running;
 };

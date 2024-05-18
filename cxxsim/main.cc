@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
   auto vcd_out =
       do_vcd ? std::optional<std::string>(std::string(argv[2])) : std::nullopt;
 
-  auto [sim, thread] = SimThread::start(vcd_out);
+  auto sim = SimThread::start(vcd_out);
   auto &inst = Testbench::inst();
 
   auto window = SDL_CreateWindow("sevsegsim", SDL_WINDOWPOS_CENTERED,
@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
 
-  SDL_WaitThread(thread, nullptr);
+  sim->wait();
   delete sim;
 
   return 0;
