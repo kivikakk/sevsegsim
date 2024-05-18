@@ -3,7 +3,7 @@
 
 #include <sevsegsim.h>
 
-#include "render.h"
+typedef bool segment_t;
 
 class Testbench : public cxxrtl_design::bb_p_CXXRTLTestbench {
 public:
@@ -20,7 +20,6 @@ public:
 private:
   static Testbench *_inst;
 
-  bool _was_ds3;
   segment_t _segacts[4 * 7];
 };
 

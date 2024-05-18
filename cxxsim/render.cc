@@ -13,9 +13,14 @@ static SDL_FPoint vps[6][4] = {
     {{0, 95}, {0, 5}, {20, 25}, {20, 75}},
 };
 
+// For uint8_t segments.
+// static SDL_Color makeColor(segment_t segment) {
+//   return {uint8_t(64 + ((float)segment / 255.f * (255.f - 64.f))), 64, 64,
+//           SDL_ALPHA_OPAQUE};
+// }
+
 static SDL_Color makeColor(segment_t segment) {
-  return {uint8_t(64 + ((float)segment / 255.f * (255.f - 64.f))), 64, 64,
-          SDL_ALPHA_OPAQUE};
+  return {uint8_t(segment ? 255 : 64), 64, 64, SDL_ALPHA_OPAQUE};
 }
 
 void drawSegments(SDL_Renderer *renderer, const segment_t segments[7],

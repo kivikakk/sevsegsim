@@ -3,9 +3,9 @@
 
 #include <SDL.h>
 
-typedef uint8_t segment_t;
+#include "Testbench.h"
 
-void drawSegments(SDL_Renderer *renderer, const uint8_t segments[7], float offX,
-                  float offY);
+void drawSegments(SDL_Renderer *renderer, const segment_t segments[7],
+                  float offX, float offY);
 
 #endif
