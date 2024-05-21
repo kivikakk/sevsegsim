@@ -11,7 +11,7 @@ Testbench::~Testbench() { _inst = nullptr; }
 
 Testbench &Testbench::inst() { return *_inst; }
 
-void Testbench::reset() { p_ubtn.set(true); }
+void Testbench::reset() { p_ubtn.set(false); }
 
 bool Testbench::eval(performer *performer) {
   int ix = -1;

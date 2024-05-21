@@ -2,15 +2,15 @@ package ee.kivikakk.sevsegsim
 
 import _root_.circt.stage.ChiselStage
 import chisel3._
-import chisel3.util._
 import chisel3.experimental.dataview._
+import chisel3.util._
 import ee.hrzn.chryse.ChryseApp
 import ee.hrzn.chryse.platform.BoardPlatform
 import ee.hrzn.chryse.platform.Platform
 import ee.hrzn.chryse.platform.cxxrtl.CXXRTLOptions
 import ee.hrzn.chryse.platform.cxxrtl.CXXRTLPlatform
 import ee.hrzn.chryse.platform.ice40.IceBreakerPlatform
-import ee.hrzn.chryse.platform.resource.ButtonResource.Implicits._
+import ee.hrzn.chryse.platform.resource.implicits._
 
 class Top(platform: Platform) extends Module {
   val ubtn    = Wire(Bool())
@@ -29,25 +29,28 @@ class Top(platform: Platform) extends Module {
       ubtn := bb.io.ubtn
 
     case plat: IceBreakerPlatform =>
-      ubtn := plat.resources.ubtn
-    // plat.resources.pmod2_3 := abcdefg(0)
-    // plat.resources.pmod1a9 := abcdefg(1)
-    // plat.resources.pmod1a3 := abcdefg(2)
-    // plat.resources.pmod1a7 := abcdefg(3)
-    // plat.resources.pmod1a8 := abcdefg(4)
-    // plat.resources.pmod2_2 := abcdefg(5)
-    // plat.resources.pmod1a2 := abcdefg(6)
+      ubtn                     := plat.resources.ubtn
+      plat.resources.pmod2_3.o := abcdefg(0)
+      plat.resources.pmod1a9.o := abcdefg(1)
+      plat.resources.pmod1a3.o := abcdefg(2)
+      plat.resources.pmod1a7.o := abcdefg(3)
+      plat.resources.pmod1a8.o := abcdefg(4)
+      plat.resources.pmod2_2.o := abcdefg(5)
+      plat.resources.pmod1a2.o := abcdefg(6)
 
-    // plat.resources.pmod2_4  := ds(0)
-    // plat.resources.pmod2_1  := ds(1)
-    // plat.resources.pmod1a10 := ds(2)
-    // plat.resources.pmod1a1  := ds(3)
+      plat.resources.pmod2_4.o  := ds(0)
+      plat.resources.pmod2_1.o  := ds(1)
+      plat.resources.pmod1a10.o := ds(2)
+      plat.resources.pmod1a1.o  := ds(3)
 
-    // plat.resources.pmod1a4 := true.B // period
+      plat.resources.pmod1a4.o := true.B // period
+    case _ =>
+      // Unit test.
+      ubtn := false.B
   }
 
-  val flipReg     = RegInit(true.B)
-  val ubtnRelease = ubtn & RegNext(~ubtn)
+  val flipReg     = RegInit(false.B)
+  val ubtnRelease = ~ubtn & RegNext(ubtn)
   when(ubtnRelease)(flipReg := !flipReg)
 
   val flipper = Module(new Flipper)

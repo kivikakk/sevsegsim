@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
     auto cycles_now = sim->cycle_number();
     inst.segacts(segacts);
 
-    inst.p_ubtn.set(true);
+    inst.p_ubtn.set(false);
 
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
           sim->halt();
           break;
         case SDLK_SPACE:
-          inst.p_ubtn.set(false);
+          inst.p_ubtn.set(true);
           break;
         }
         break;

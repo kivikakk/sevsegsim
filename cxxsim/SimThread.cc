@@ -27,6 +27,10 @@ SimThread *SimThread::start(const std::optional<std::string> &vcd_out) {
 }
 
 void SimThread::main() {
+  lock();
+  sync_reset();
+  unlock();
+
   while (lock_if_running()) {
     cycle();
     unlock();

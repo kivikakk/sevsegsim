@@ -32,7 +32,7 @@ private:
   void cycle();
   void write_vcd();
 
-  cxxrtl_design::p_top _top;
+  cxxrtl_design::p_chrysetop _top;
   std::optional<std::string> _vcd_out;
   uint64_t _vcd_time;
   cxxrtl::vcd_writer _vcd;

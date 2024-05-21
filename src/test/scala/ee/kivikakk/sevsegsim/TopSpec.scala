@@ -9,12 +9,12 @@ import org.scalatest.flatspec.AnyFlatSpec
 class TopSpec extends AnyFlatSpec with ChiselScalatestTester {
   behavior.of("Top")
 
-  implicit private val platform: Platform = new Platform {
+  val platform = new Platform {
     val id      = "topspec"
     val clockHz = 10_000
   }
 
   it should "do something :)" in {
-    test(new Top()).withAnnotations(Seq(WriteVcdAnnotation)) { c => }
+    test(new Top(platform)).withAnnotations(Seq(WriteVcdAnnotation)) { c => }
   }
 }
