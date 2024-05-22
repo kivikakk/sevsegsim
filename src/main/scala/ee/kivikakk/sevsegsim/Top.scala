@@ -77,7 +77,7 @@ class Top(platform: Platform) extends Module {
   }
 }
 
-object Top extends ChryseApp[Top] {
+object Top extends ChryseApp {
   override val name            = "sevsegsim"
   override val genTop          = new Top(_)
   override val targetPlatforms = Seq(IceBreakerPlatform())
