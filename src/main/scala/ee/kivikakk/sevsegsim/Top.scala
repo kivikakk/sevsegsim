@@ -29,21 +29,21 @@ class Top(platform: Platform) extends Module {
       ubtn := bb.io.ubtn
 
     case plat: IceBreakerPlatform =>
-      ubtn                     := plat.resources.ubtn
-      plat.resources.pmod2_3.o := abcdefg(0)
-      plat.resources.pmod1a9.o := abcdefg(1)
-      plat.resources.pmod1a3.o := abcdefg(2)
-      plat.resources.pmod1a7.o := abcdefg(3)
-      plat.resources.pmod1a8.o := abcdefg(4)
-      plat.resources.pmod2_2.o := abcdefg(5)
-      plat.resources.pmod1a2.o := abcdefg(6)
+      ubtn                       := plat.resources.ubtn
+      plat.resources.pmod2(3).o  := abcdefg(0)
+      plat.resources.pmod1a(9).o := abcdefg(1)
+      plat.resources.pmod1a(3).o := abcdefg(2)
+      plat.resources.pmod1a(7).o := abcdefg(3)
+      plat.resources.pmod1a(8).o := abcdefg(4)
+      plat.resources.pmod2(2).o  := abcdefg(5)
+      plat.resources.pmod1a(2).o := abcdefg(6)
 
-      plat.resources.pmod2_4.o  := ds(0)
-      plat.resources.pmod2_1.o  := ds(1)
-      plat.resources.pmod1a10.o := ds(2)
-      plat.resources.pmod1a1.o  := ds(3)
+      plat.resources.pmod2(4).o   := ds(0)
+      plat.resources.pmod2(1).o   := ds(1)
+      plat.resources.pmod1a(10).o := ds(2)
+      plat.resources.pmod1a(1).o  := ds(3)
 
-      plat.resources.pmod1a4.o := true.B // period
+      plat.resources.pmod1a(4).o := true.B // period
     case _ =>
       // Unit test.
       ubtn := false.B
