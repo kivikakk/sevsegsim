@@ -11,10 +11,10 @@ class Flipper extends RawModule {
     val segs_out = Output(Vec(7, Bool()))
   })
 
-  when(~io.flip) {
-    for { (o, i) <- io.segs_out.zip(io.segs_in) } o := i
-    for { (o, i) <- io.d_out.zip(io.d_in) } o       := i
-  }.otherwise {
+  io.segs_out := io.segs_in
+  io.d_out    := io.d_in
+
+  when(io.flip) {
     for { (oIx, iIx) <- Seq(3, 4, 5, 0, 1, 2, 6).zipWithIndex }
       io.segs_out(oIx) := io.segs_in(iIx)
     for { (o, i) <- io.d_out.reverseIterator.zip(io.d_in) } o := i
