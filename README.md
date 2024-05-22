@@ -26,7 +26,9 @@ And here's the same gateware (plus [blackbox definition], [SDL main loop],
 
 ![photograph of sevsegsim running in cxxsim](demo-cxxsim.png)
 
-`sbt "run build icebreaker -p"` builds for [iCEBreaker] and programs the board.
+`sbt run` will show help info.
+
+`sbt "run build -b icebreaker -p"` builds for [iCEBreaker] and programs the board.
 
 [iCEBreaker]: https://www.crowdsupply.com/1bitsquared/icebreaker-fpga
 
