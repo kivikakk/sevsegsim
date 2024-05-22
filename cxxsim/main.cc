@@ -100,8 +100,7 @@ int main(int argc, char **argv) {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
 
-  sim->wait();
+  int rc = sim->wait();
   delete sim;
-
-  return 0;
+  return rc;
 }

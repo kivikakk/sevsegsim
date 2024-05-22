@@ -4,8 +4,7 @@
 #include "SimThread.h"
 
 static int simmain(void *vsim) {
-  static_cast<SimThread *>(vsim)->main();
-  return 0;
+  return static_cast<SimThread *>(vsim)->main();
 }
 
 SimThread::SimThread(const std::optional<std::string> &vcd_out)
@@ -26,7 +25,7 @@ SimThread *SimThread::start(const std::optional<std::string> &vcd_out) {
   return sim;
 }
 
-void SimThread::main() {
+int SimThread::main() {
   lock();
   sync_reset();
   unlock();
@@ -36,7 +35,7 @@ void SimThread::main() {
     unlock();
   }
 
-  write_vcd();
+  return write_vcd();
 }
 
 bool SimThread::lock_if_running() {
@@ -50,7 +49,11 @@ bool SimThread::lock_if_running() {
 
 void SimThread::lock() { SDL_LockMutex(_mutex); }
 void SimThread::unlock() { SDL_UnlockMutex(_mutex); }
-void SimThread::wait() { SDL_WaitThread(_thread, nullptr); }
+int SimThread::wait() {
+  int rc = 0;
+  SDL_WaitThread(_thread, &rc);
+  return rc;
+}
 
 uint64_t SimThread::cycle_number() { return _vcd_time >> 1; }
 
@@ -72,9 +75,15 @@ void SimThread::cycle() {
   _vcd.sample(_vcd_time++);
 }
 
-void SimThread::write_vcd() {
+int SimThread::write_vcd() {
   if (_vcd_out) {
     std::ofstream of(*_vcd_out);
     of << _vcd.buffer;
+    of.close();
+    if (!of) {
+      std::cerr << "error while writing vcd" << std::endl;
+      return 1;
+    }
   }
+  return 0;
 }

@@ -17,12 +17,12 @@ public:
 
   static SimThread *start(const std::optional<std::string> &vcd_out);
 
-  void main();
+  int main();
 
   bool lock_if_running();
   void lock();
   void unlock();
-  void wait();
+  int wait();
 
   uint64_t cycle_number();
   void halt();
@@ -30,7 +30,7 @@ public:
 private:
   void sync_reset();
   void cycle();
-  void write_vcd();
+  int write_vcd();
 
   cxxrtl_design::p_chrysetop _top;
   std::optional<std::string> _vcd_out;
