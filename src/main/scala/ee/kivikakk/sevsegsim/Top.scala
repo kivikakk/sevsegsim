@@ -5,7 +5,6 @@ import chisel3._
 import chisel3.experimental.dataview._
 import chisel3.util._
 import ee.hrzn.chryse.ChryseApp
-import ee.hrzn.chryse.platform.BoardPlatform
 import ee.hrzn.chryse.platform.Platform
 import ee.hrzn.chryse.platform.cxxrtl.CXXRTLOptions
 import ee.hrzn.chryse.platform.cxxrtl.CXXRTLPlatform
