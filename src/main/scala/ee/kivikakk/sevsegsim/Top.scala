@@ -11,7 +11,7 @@ import ee.hrzn.chryse.platform.cxxrtl.CXXRTLPlatform
 import ee.hrzn.chryse.platform.ice40.IceBreakerPlatform
 
 class Top(implicit platform: Platform) extends Module {
-  override def desiredName = "chrysetop"
+  override def desiredName = "sevsegsim"
 
   val ubtn    = Wire(Bool())
   val ds      = Wire(Vec(4, Bool()))
