@@ -1,12 +1,11 @@
 package ee.kivikakk.sevsegsim
 
 import chisel3._
-import chiseltest._
-import chiseltest.simulator.WriteVcdAnnotation
+import chisel3.simulator.EphemeralSimulator._
 import ee.hrzn.chryse.platform.Platform
 import org.scalatest.flatspec.AnyFlatSpec
 
-class TopSpec extends AnyFlatSpec with ChiselScalatestTester {
+class TopSpec extends AnyFlatSpec {
   behavior.of("Top")
 
   implicit val plat: Platform = new Platform {
@@ -15,6 +14,6 @@ class TopSpec extends AnyFlatSpec with ChiselScalatestTester {
   }
 
   it should "do something :)" in {
-    test(new Top).withAnnotations(Seq(WriteVcdAnnotation)) { c => }
+    simulate(new Top) { c => }
   }
 }
