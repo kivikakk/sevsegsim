@@ -1,4 +1,4 @@
-name: iCE40 synthesis
+name: iCEBreaker synthesis
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  synth-ice40:
+  synth-icebreaker:
     runs-on: ubuntu-latest
     steps:
     - name: Set up Chryse
@@ -23,4 +23,4 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Elaborate and synthesise
-      run: sbt 'run build ice40'
+      run: sbt 'run build -b icebreaker'

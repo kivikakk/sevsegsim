@@ -9,7 +9,6 @@ import ee.hrzn.chryse.platform.Platform
 import ee.hrzn.chryse.platform.cxxrtl.CXXRTLOptions
 import ee.hrzn.chryse.platform.cxxrtl.CXXRTLPlatform
 import ee.hrzn.chryse.platform.ice40.IceBreakerPlatform
-import ee.hrzn.chryse.platform.resource.implicits._
 
 class Top(implicit platform: Platform) extends Module {
   override def desiredName = "chrysetop"
