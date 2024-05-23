@@ -11,7 +11,9 @@ import ee.hrzn.chryse.platform.cxxrtl.CXXRTLPlatform
 import ee.hrzn.chryse.platform.ice40.IceBreakerPlatform
 import ee.hrzn.chryse.platform.resource.implicits._
 
-class Top(platform: Platform) extends Module {
+class Top(implicit platform: Platform) extends Module {
+  override def desiredName = "chrysetop"
+
   val ubtn    = Wire(Bool())
   val ds      = Wire(Vec(4, Bool()))
   val abcdefg = Wire(Vec(7, Bool()))
@@ -77,9 +79,9 @@ class Top(platform: Platform) extends Module {
 }
 
 object Top extends ChryseApp {
-  override val name            = "sevsegsim"
-  override val genTop          = new Top(_)
-  override val targetPlatforms = Seq(IceBreakerPlatform())
+  override val name                                  = "sevsegsim"
+  override def genTop()(implicit platform: Platform) = new Top
+  override val targetPlatforms                       = Seq(IceBreakerPlatform())
   override val cxxrtlOptions = Some(
     CXXRTLOptions(
       clockHz = 3_000_000,
