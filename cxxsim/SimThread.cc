@@ -66,11 +66,11 @@ void SimThread::sync_reset() {
 }
 
 void SimThread::cycle() {
-  _top.p_clock.set(true);
+  _top.p_clock.set(false);
   _top.step();
   _vcd.sample(_vcd_time++);
 
-  _top.p_clock.set(false);
+  _top.p_clock.set(true);
   _top.step();
   _vcd.sample(_vcd_time++);
 }
