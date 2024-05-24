@@ -2,9 +2,12 @@ package ee.kivikakk.sevsegsim
 
 import _root_.circt.stage.ChiselStage
 import chisel3._
+import chisel3.experimental.ChiselAnnotation
+import chisel3.experimental.annotate
 import chisel3.experimental.dataview._
 import chisel3.util._
 import ee.hrzn.chryse.ChryseApp
+import ee.hrzn.chryse.chisel.addAttributeModule
 import ee.hrzn.chryse.platform.Platform
 import ee.hrzn.chryse.platform.cxxrtl.CXXRTLOptions
 import ee.hrzn.chryse.platform.cxxrtl.CXXRTLPlatform
@@ -20,6 +23,8 @@ class Top(implicit platform: Platform) extends Module {
   platform match {
     case CXXRTLPlatform(_) =>
       val bb = Module(new CXXRTLTestbench)
+      addAttributeModule(bb, "cxxrtl_blackbox")
+
       bb.io.clock := clock
 
       for { (o, i) <- bb.io.abcdefgp.zip(abcdefg.appended(true.B)) }
@@ -84,7 +89,7 @@ object Top extends ChryseApp {
   override val cxxrtlOptions = Some(
     CXXRTLOptions(
       clockHz = 3_000_000,
-      blackboxes = Seq(classOf[CXXRTLTestbench]),
+      // blackboxes = Seq(classOf[CXXRTLTestbench]),
       pkgConfig = Seq("sdl2"),
     ),
   )
