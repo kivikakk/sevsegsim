@@ -18,7 +18,7 @@ class Top(implicit platform: Platform) extends Module {
   val abcdefg = Wire(Vec(7, Bool()))
 
   platform match {
-    case CXXRTLPlatform(_) =>
+    case _: CXXRTLPlatform =>
       val bb = Module(new CXXRTLTestbench)
       bb.io.clock := clock
 
@@ -83,7 +83,7 @@ object Top extends ChryseApp {
   override val targetPlatforms                       = Seq(IceBreakerPlatform())
   override val cxxrtlOptions = Some(
     CXXRTLOptions(
-      clockHz = 3_000_000,
+      platforms = Seq(new CXXRTLPlatform("cxxrtl", clockHz = 3_000_000) {}),
       blackboxes = Seq(classOf[CXXRTLTestbench]),
       pkgConfig = Seq("sdl2"),
     ),
