@@ -1,8 +1,9 @@
 package ee.kivikakk.sevsegsim
 
 import chisel3._
+import chisel3.experimental.ExtModule
 
-class CXXRTLTestbench extends BlackBox {
+class CXXRTLTestbench extends ExtModule {
   val io = IO(new Bundle {
     val clock    = Input(Clock())
     val ubtn     = Output(Bool())

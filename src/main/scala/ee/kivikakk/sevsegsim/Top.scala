@@ -83,7 +83,7 @@ object Top extends ChryseApp {
   override val targetPlatforms                       = Seq(IceBreakerPlatform())
   override val cxxrtlOptions = Some(
     CXXRTLOptions(
-      platforms = Seq(new CXXRTLPlatform("cxxrtl", clockHz = 3_000_000) {}),
+      platforms = Seq(new CXXRTLPlatform("cxxrtl") { val clockHz = 3_000_000 }),
       blackboxes = Seq(classOf[CXXRTLTestbench]),
       pkgConfig = Seq("sdl2"),
     ),
